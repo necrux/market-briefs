@@ -25,11 +25,11 @@ class Notifications:
         """Gather news for watched stocks."""
         api_key = self.auth.auth_news()
         companies = self.stocks.closing()
-        for company in companies:
-            if companies[company]["Percentage"] > WATCH_PERCENT:
+        for symbol, company in companies.items():
+            if company["Percentage"] > WATCH_PERCENT:
                 news_params = {
-                    "q": companies[company]["Company"],
-                    "qInTitle": companies[company]["Company"],
+                    "q": company["Company"],
+                    "qInTitle": company["Company"],
                     "from": self.yesterday,
                     "sortBy": "publishedAt",
                     "apiKey": api_key,
@@ -38,10 +38,10 @@ class Notifications:
                 articles = response.json()["articles"]
                 three_articles = articles[:3]
 
-                if companies[company]["Difference"] > 0:
-                    title = f"{company}: {companies[company]['Percentage']}% 📈"
+                if company["Difference"] > 0:
+                    title = f"{symbol}: {company['Percentage']}% 📈"
                 else:
-                    title = f"{company}: {companies[company]['Percentage']}% 📉"
+                    title = f"{symbol}: {company['Percentage']}% 📉"
 
                 self.formatted_articles += [f"{title}\n" \
                                             f"Headline: {article['title']}\n" \
