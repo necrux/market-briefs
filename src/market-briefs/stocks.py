@@ -5,7 +5,7 @@ import yaml
 from auth import Auth
 
 STOCK_ENDPOINT = "https://www.alphavantage.co/query"
-STOCKS_FILE = "../../stocks.yaml"
+STOCKS_FILE = "stocks.yaml"
 
 
 class Stocks:
